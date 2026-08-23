@@ -1,4 +1,4 @@
-# StayFlow AI — Hospitality Tech PWA Prototype
+# SwiftGate — Hospitality Tech PWA Prototype
 
 > Zero-Download Operating System for Modern Hospitality  
 > Built for IIT Bombay Eureka! Demo · Next.js 14 · TypeScript · Tailwind CSS
@@ -47,7 +47,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## 🛰️ Deploy on Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-repo/stayflow-ai)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-repo/swiftgate)
 
 No environment variables required — fully self-contained demo.
 
@@ -61,5 +61,5 @@ No environment variables required — fully self-contained demo.
 
 ---
 
-*© 2026 StayFlow AI · IIT Bombay Eureka!*
+*© 2026 SwiftGate · IIT Bombay Eureka!*
 # swiftgate
