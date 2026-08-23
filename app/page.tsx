@@ -222,10 +222,10 @@ export default function LandingPage() {
           </div>
 
           <Link
-            href="/demo/checkin"
+            href="/contactus"
             className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-white border border-[0.5px] border-neutral-800 hover:border-neutral-600 px-4 py-2 transition-colors"
           >
-            Launch Demo
+            Talk to Sales
             <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
@@ -251,7 +251,7 @@ export default function LandingPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-0 border border-[0.5px] border-neutral-800">
+            <div className="grid grid-cols-3 gap-0 border-[0.5px] border-neutral-800">
               {[
                 { value: "< 60s", label: "Pre-Arrival Verification" },
                 { value: "0", label: "App Downloads" },
@@ -259,7 +259,7 @@ export default function LandingPage() {
               ].map(({ value, label }, i) => (
                 <div
                   key={label}
-                  className={`px-5 py-5 ${i < 2 ? "border-r border-[0.5px] border-neutral-800" : ""}`}
+                  className={`px-5 py-5 ${i < 2 ? "border-r-[0.5px] border-neutral-800" : ""}`}
                 >
                   <p className="text-2xl font-semibold text-white">{value}</p>
                   <p className="text-[10px] uppercase tracking-widest text-neutral-500 mt-1">
@@ -293,25 +293,31 @@ export default function LandingPage() {
         </section>
 
         {/* ── Workflow Simulation Showcase ─────────────────────────────────── */}
-        <section className="py-16 border-t border-[0.5px] border-neutral-800 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-neutral-500">
-              INTERACTIVE PREVIEW
-            </p>
-            <h2 className="text-2xl font-semibold text-white mt-2 mb-4">
-              Pre-Arrival Verification Flow
-            </h2>
-            <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
-              Guests complete regulatory identity verification on their mobile device prior to arrival. Verified guest records and compliance parameters write directly to the hotel management system.
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <WorkflowSimulation />
+        <section className="relative py-16 lg:py-20 border border-[0.5px] border-neutral-800 rounded-2xl overflow-hidden mb-16">
+          {/* Subtle background texture */}
+          <div className="absolute inset-0 bg-neutral-950/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:24px_24px] pointer-events-none" />
+          
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center px-6 lg:px-16">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-neutral-500">
+                INTERACTIVE PREVIEW
+              </p>
+              <h2 className="text-2xl font-semibold text-white mt-2 mb-4">
+                Pre-Arrival Verification Flow
+              </h2>
+              <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
+                Guests complete regulatory identity verification on their mobile device prior to arrival. Verified guest records and compliance parameters write directly to the hotel management system.
+              </p>
+            </div>
+            <div className="flex justify-center lg:justify-end">
+              <WorkflowSimulation />
+            </div>
           </div>
         </section>
 
         {/* ── How It Works ─────────────────────────────────────────────────── */}
-        <section className="py-16 border-t border-[0.5px] border-neutral-800">
+        <section className="py-16 border-t-[0.5px] border-neutral-800">
           <div className="mb-10">
             <p className="text-[10px] uppercase tracking-widest text-neutral-500">
               SYSTEM PIPELINE
@@ -325,7 +331,7 @@ export default function LandingPage() {
           </div>
 
           {/* 3-step progression */}
-          <div className="grid grid-cols-1 md:grid-cols-3 border border-[0.5px] border-neutral-800">
+          <div className="grid grid-cols-1 md:grid-cols-3 border-[0.5px] border-neutral-800">
             {[
               {
                 step: "01",
@@ -352,7 +358,7 @@ export default function LandingPage() {
               <div
                 key={step}
                 className={`p-6 flex flex-col gap-5 ${
-                  i < 2 ? "border-b md:border-b-0 md:border-r border-[0.5px] border-neutral-800" : ""
+                  i < 2 ? "border-b-[0.5px] md:border-b-0 md:border-r-[0.5px] border-neutral-800" : ""
                 }`}
               >
                 {/* Step number + icon */}
@@ -360,7 +366,7 @@ export default function LandingPage() {
                   <span className="text-[10px] uppercase tracking-widest text-neutral-700 font-mono">
                     Step {step}
                   </span>
-                  <div className="w-8 h-8 border border-[0.5px] border-neutral-800 flex items-center justify-center">
+                  <div className="w-8 h-8 border-[0.5px] border-neutral-800 flex items-center justify-center">
                     <Icon className="w-4 h-4 text-neutral-400" />
                   </div>
                 </div>
@@ -376,7 +382,7 @@ export default function LandingPage() {
         </section>
 
         {/* ── Pillars ──────────────────────────────────────────────────────── */}
-        <section className="py-16 border-t border-[0.5px] border-neutral-800">
+        <section className="py-16 border-t-[0.5px] border-neutral-800">
           <div className="mb-12">
             <p className="text-[10px] uppercase tracking-widest text-neutral-500">
               Platform Architecture
@@ -390,13 +396,13 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-[0.5px] border-neutral-800">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-[0.5px] border-neutral-800">
             {pillars.map(({ icon: Icon, title, body }, i) => (
               <div
                 key={title}
-                className={`p-6 ${i < pillars.length - 1 ? "border-r border-[0.5px] border-neutral-800 md:border-b-0" : ""}`}
+                className={`p-6 ${i < pillars.length - 1 ? "border-b-[0.5px] border-neutral-800 md:border-b-0 md:border-r-[0.5px]" : ""}`}
               >
-                <div className="w-8 h-8 border border-[0.5px] border-neutral-800 flex items-center justify-center mb-5">
+                <div className="w-8 h-8 border-[0.5px] border-neutral-800 flex items-center justify-center mb-5">
                   <Icon className="w-4 h-4 text-neutral-400" />
                 </div>
                 <h3 className="text-sm font-semibold text-white mb-2">{title}</h3>
@@ -407,7 +413,7 @@ export default function LandingPage() {
         </section>
 
         {/* ── Terminal ─────────────────────────────────────────────────────── */}
-        <section className="py-16 border-t border-[0.5px] border-neutral-800 mb-20">
+        <section className="py-16 border-t-[0.5px] border-neutral-800">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className="space-y-6">
               <div>
@@ -442,7 +448,7 @@ export default function LandingPage() {
       </main>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[0.5px] border-neutral-800 py-6">
+      <footer className="border-t-[0.5px] border-neutral-800 py-6">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <p className="text-[10px] uppercase tracking-widest text-neutral-700">
             SwiftGate Technologies
