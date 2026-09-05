@@ -25,6 +25,8 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+import { Analytics } from "@vercel/analytics/next";
+
 export default function RootLayout({
   children,
 }: {
@@ -34,6 +36,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-sans antialiased bg-slate-950 text-slate-100`}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
