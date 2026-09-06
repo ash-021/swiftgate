@@ -74,8 +74,9 @@ export default function PassportScanner() {
       setIsLoading(false);
       setStep('VISA_UPLOAD');
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'Please align the bottom two lines of the passport within the frame');
+      console.error('MRZ Parsing Error:', err);
+      // Always show a clean user-facing instruction, ignoring internal parser errors
+      setError('Please align the bottom two lines of the passport within the frame');
       setIsLoading(false);
       setPassportSrc(null); // allow them to retake
     }
