@@ -270,7 +270,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right — Ultimate Demo Card */}
+          {/* Right — Demo entry cards */}
           <div className="lg:col-span-2 space-y-4">
             <p className="text-[10px] uppercase tracking-widest text-neutral-500">
               Live Demo Access
@@ -281,6 +281,13 @@ export default function LandingPage() {
               description="Experience the magic of zero-trust edge computing. Use the mobile guest flow and watch records sync to the PMS Front Desk instantly in real-time."
               href="/demo/split"
               qrUrl={`${origin}/demo/split`}
+            />
+            <DemoCard
+              eyebrow="Flow 2 of 2 — In-Room QR Scan"
+              title="Launch In-Room Concierge"
+              description="Simulates the in-room ordering experience: F&B menu, cart, and direct room-folio charge via Kitchen Display System."
+              href="/demo/concierge"
+              qrUrl={`${origin}/demo/concierge`}
             />
           </div>
         </section>
@@ -452,6 +459,12 @@ export default function LandingPage() {
               className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-neutral-400 transition-colors"
             >
               Live Split-Screen Demo
+            </Link>
+            <Link
+              href="/demo/concierge"
+              className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-neutral-400 transition-colors"
+            >
+              Concierge Demo
             </Link>
           </div>
         </div>
