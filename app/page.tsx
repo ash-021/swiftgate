@@ -270,24 +270,17 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right — Two demo entry cards */}
+          {/* Right — Ultimate Demo Card */}
           <div className="lg:col-span-2 space-y-4">
             <p className="text-[10px] uppercase tracking-widest text-neutral-500">
               Live Demo Access
             </p>
             <DemoCard
-              eyebrow="Flow 1 of 2 — WhatsApp Trigger"
-              title="Launch Pre-Arrival Check-in"
-              description="Simulates the guest journey from WhatsApp link to biometric ID verification and arrival preference capture."
-              href="/demo/checkin"
-              qrUrl={`${origin}/demo/checkin`}
-            />
-            <DemoCard
-              eyebrow="Flow 2 of 2 — In-Room QR Scan"
-              title="Launch In-Room Concierge"
-              description="Simulates the in-room ordering experience: F&B menu, cart, and direct room-folio charge via Kitchen Display System."
-              href="/demo/concierge"
-              qrUrl={`${origin}/demo/concierge`}
+              eyebrow="Interactive Experience"
+              title="Launch Ultimate Split-Screen Demo"
+              description="Experience the magic of zero-trust edge computing. Use the mobile guest flow and watch records sync to the PMS Front Desk instantly in real-time."
+              href="/demo/split"
+              qrUrl={`${origin}/demo/split`}
             />
           </div>
         </section>
@@ -455,16 +448,10 @@ export default function LandingPage() {
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="/demo/checkin"
+              href="/demo/split"
               className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-neutral-400 transition-colors"
             >
-              Pre-Arrival Demo
-            </Link>
-            <Link
-              href="/demo/concierge"
-              className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-neutral-400 transition-colors"
-            >
-              Concierge Demo
+              Live Split-Screen Demo
             </Link>
           </div>
         </div>
