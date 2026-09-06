@@ -14,6 +14,20 @@ module.exports = {
         slate: {
           950: "#020617",
         },
+        brand: {
+          400: "#36D1CB", // Lighter variant for hover
+          500: "#25B2AD", // Primary logo color
+          600: "#1C8F8A", // Darker variant
+          900: "#093634", // Very dark
+          950: "#041B1A",
+        },
+        emerald: { // Aliasing emerald to brand to re-theme without rewriting classes
+          400: "#36D1CB",
+          500: "#25B2AD", 
+          600: "#1C8F8A",
+          900: "#093634",
+          950: "#041B1A",
+        },
       },
       animation: {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",

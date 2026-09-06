@@ -208,6 +208,7 @@ export default function LandingPage() {
       <header className="border-b border-[0.5px] border-neutral-800 bg-black/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="SwiftGate Logo" className="h-6 w-auto object-contain" />
             <p className="font-bold text-lg text-white tracking-tight">SwiftGate</p>
             <div className="hidden md:flex items-center gap-2 ml-2">
               {["WhatsApp-Native", "PMS Integrated", "Biometric Compliance"].map((b) => (
