@@ -11,8 +11,13 @@ export default function SplitScreenDemo() {
     setMounted(true);
     
     // Construct the app. subdomain URL
-    const host = window.location.host;
+    let host = window.location.host;
     const protocol = window.location.protocol;
+    
+    // Strip 'www.' if present so we get 'app.swiftgate.in' instead of 'app.www.swiftgate.in'
+    if (host.startsWith('www.')) {
+      host = host.substring(4);
+    }
     
     if (host.startsWith('app.')) {
       setAppUrl(`${protocol}//${host}`);
