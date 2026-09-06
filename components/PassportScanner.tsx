@@ -52,13 +52,36 @@ export default function PassportScanner() {
     const src = webcamRef.current?.getScreenshot();
     if (!src) return;
 
-    setPassportSrc(src);
     setIsLoading(true);
     setError(null);
-    setPhase('Scanning Passport MRZ...');
+    setPhase('Isolating MRZ zone...');
 
     try {
-      const result = await Tesseract.recognize(src, 'eng');
+      // 1. Load image to crop it to the bounding box
+      const img = new Image();
+      img.src = src;
+      await new Promise((resolve) => { img.onload = resolve; });
+
+      const canvas = document.createElement('canvas');
+      // Bounding box is roughly 80% width and 50% height in the center
+      const cropWidth = img.width * 0.8;
+      const cropHeight = img.height * 0.5;
+      const cropX = (img.width - cropWidth) / 2;
+      const cropY = (img.height - cropHeight) / 2;
+
+      canvas.width = cropWidth;
+      canvas.height = cropHeight;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas not supported');
+
+      ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+      
+      const croppedSrc = canvas.toDataURL('image/jpeg');
+      // Show the cropped image to the user so they see what the AI sees!
+      setPassportSrc(croppedSrc);
+
+      setPhase('Scanning MRZ text...');
+      const result = await Tesseract.recognize(croppedSrc, 'eng');
       const parsed = parse(result.data.text);
       
       if (!parsed.valid || !parsed.fields?.firstName || !parsed.fields?.documentNumber) {
