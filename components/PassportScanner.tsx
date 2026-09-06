@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Tesseract from 'tesseract.js';
 import Webcam from 'react-webcam';
+import { parse } from 'mrz';
 import { supabase } from '@/lib/supabaseClient';
 
 type Step = 'PASSPORT_UPLOAD' | 'VISA_UPLOAD' | 'BIOMETRIC_MATCH' | 'REVIEW' | 'SUCCESS';
@@ -47,70 +48,38 @@ export default function PassportScanner() {
 
   const [matchResult, setMatchResult] = useState<{ score: number; passed: boolean } | null>(null);
 
-  // Parse MRZ line 1: P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<
-  // Parse MRZ line 2: L898902C36UTO7408122F1204159ZE184226B<<<<<10
-  const parseMRZ = (text: string) => {
-    const lines = text.split('\n').map(l => l.replace(/\s+/g, ''));
-    
-    let name = 'International Guest';
-    let passportNumber = 'XX0000000';
-    let nationality = 'Unknown';
+  const handlePassportCapture = useCallback(async () => {
+    const src = webcamRef.current?.getScreenshot();
+    if (!src) return;
 
-    // Simple heuristic for MRZ
-    const mrzLines = lines.filter(l => l.length >= 40 && l.match(/[A-Z0-9<]+/));
-    if (mrzLines.length >= 2) {
-      const line1 = mrzLines[0];
-      const line2 = mrzLines[1];
+    setPassportSrc(src);
+    setIsLoading(true);
+    setError(null);
+    setPhase('Scanning Passport MRZ...');
+
+    try {
+      const result = await Tesseract.recognize(src, 'eng');
+      const parsed = parse(result.data.text);
       
-      if (line1.startsWith('P')) {
-        nationality = line1.substring(2, 5).replace(/</g, '');
-        const namePart = line1.substring(5).split('<<');
-        if (namePart.length >= 2) {
-          const surname = namePart[0].replace(/</g, ' ');
-          const givenNames = namePart[1].replace(/</g, ' ');
-          name = `${givenNames} ${surname}`.trim();
-        }
+      if (!parsed.valid || !parsed.fields?.firstName || !parsed.fields?.documentNumber) {
+        throw new Error('Please align the bottom two lines of the passport within the frame');
       }
-      
-      passportNumber = line2.substring(0, 9).replace(/</g, '');
+
+      setExtractedData({
+        name: `${parsed.fields.firstName || ''} ${parsed.fields.lastName || ''}`.trim(),
+        passportNumber: parsed.fields.documentNumber || '',
+        nationality: parsed.fields.nationality || ''
+      });
+
+      setIsLoading(false);
+      setStep('VISA_UPLOAD');
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Please align the bottom two lines of the passport within the frame');
+      setIsLoading(false);
+      setPassportSrc(null); // allow them to retake
     }
-
-    return { name, passportNumber, nationality };
-  };
-
-  const handlePassportUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const src = ev.target?.result as string;
-      setPassportSrc(src);
-      setIsLoading(true);
-      setError(null);
-      setPhase('Scanning Passport MRZ...');
-
-      try {
-        const result = await Tesseract.recognize(src, 'eng');
-        const mrzData = parseMRZ(result.data.text);
-        
-        // Even if MRZ parsing fails slightly, we continue for POC purposes
-        setExtractedData({
-          name: mrzData.name !== 'International Guest' ? mrzData.name : 'Jane Doe (Parsed)',
-          passportNumber: mrzData.passportNumber !== 'XX0000000' ? mrzData.passportNumber : 'A12345678',
-          nationality: mrzData.nationality !== 'Unknown' ? mrzData.nationality : 'USA'
-        });
-
-        setIsLoading(false);
-        setStep('VISA_UPLOAD');
-      } catch (err) {
-        console.error(err);
-        setError('Failed to scan passport. Please try again.');
-        setIsLoading(false);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
+  }, []);
 
   const handleVisaUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -269,37 +238,47 @@ export default function PassportScanner() {
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => passportFileRef.current?.click()}
-              disabled={isLoading}
-              className={`w-full border border-[0.5px] rounded-sm px-4 py-8 flex flex-col items-center justify-center gap-3 text-center transition-colors ${
-                passportSrc
-                  ? 'border-neutral-600 bg-neutral-900'
-                  : 'border-neutral-800 bg-black hover:border-neutral-700'
-              }`}
-            >
+            <div className="w-full border border-[0.5px] border-neutral-800 rounded-sm overflow-hidden bg-black relative flex flex-col items-center justify-center min-h-[400px]">
               {passportSrc ? (
-                <img src={passportSrc} alt="Passport preview" className="w-full max-h-48 object-contain rounded-sm opacity-80" />
+                <img src={passportSrc} alt="Passport preview" className="w-full h-full object-cover opacity-80" />
               ) : (
                 <>
-                  <svg className="w-8 h-8 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
-                  <div>
-                    <p className="text-xs font-medium text-white">Upload Passport</p>
-                    <p className="text-[11px] text-neutral-500 mt-0.5">Ensure the MRZ lines at the bottom are visible</p>
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={{ facingMode: 'environment' }}
+                    className="w-full h-full object-cover absolute inset-0"
+                  />
+                  {/* CSS Overlay for Bounding Box */}
+                  <div className="absolute inset-0 z-10 pointer-events-none flex flex-col">
+                    <div className="bg-black/60 flex-1"></div>
+                    <div className="flex shrink-0 h-48">
+                      <div className="bg-black/60 flex-1"></div>
+                      <div className="w-72 border-2 border-emerald-500/50 rounded-lg relative shadow-[0_0_0_9999px_rgba(0,0,0,0.6)]">
+                        {/* Corner markers */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-emerald-400"></div>
+                        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-emerald-400"></div>
+                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-emerald-400"></div>
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-emerald-400"></div>
+                      </div>
+                      <div className="bg-black/60 flex-1"></div>
+                    </div>
+                    <div className="bg-black/60 flex-1 flex flex-col items-center justify-end pb-8 pointer-events-auto">
+                      {!isLoading && (
+                        <button
+                          type="button"
+                          onClick={handlePassportCapture}
+                          className="w-16 h-16 bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white rounded-full flex items-center justify-center transition-all"
+                        >
+                          <div className="w-12 h-12 bg-white rounded-full pointer-events-none" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </>
               )}
-            </button>
-            <input
-              ref={passportFileRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handlePassportUpload}
-            />
+            </div>
 
             {isLoading && (
               <div className="border border-[0.5px] border-neutral-800 bg-black rounded-sm px-4 py-3 flex items-center gap-3">
