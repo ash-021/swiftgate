@@ -517,11 +517,14 @@ export default function CheckInPage() {
       <div className="w-full max-w-md min-h-screen flex flex-col border-x border-[0.5px] border-neutral-800">
         {/* Header */}
         <header className="px-6 py-5 border-b border-[0.5px] border-neutral-800 flex items-center justify-between shrink-0">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-neutral-500">
-              SwiftGate
-            </p>
-            <p className="text-xs font-semibold text-white mt-0.5">Pre-Arrival Check-In</p>
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="SwiftGate Logo" className="h-5 w-auto object-contain" />
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-neutral-500">
+                SwiftGate
+              </p>
+              <p className="text-xs font-semibold text-white mt-0.5">Pre-Arrival Check-In</p>
+            </div>
           </div>
           {/* Step indicator dots */}
           <div className="flex items-center gap-1.5">

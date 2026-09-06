@@ -9,8 +9,9 @@ export default function ContactUsPage() {
       <header className="border-b border-[0.5px] border-neutral-800 bg-black/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" className="font-bold text-lg text-white tracking-tight hover:opacity-80 transition-opacity">
-              SwiftGate
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <img src="/logo.png" alt="SwiftGate Logo" className="h-6 w-auto object-contain" />
+              <span className="font-bold text-lg text-white tracking-tight">SwiftGate</span>
             </Link>
           </div>
 

@@ -153,7 +153,8 @@ export default function FrontDeskDashboard() {
     <div className="min-h-screen bg-neutral-950 text-white font-sans flex flex-col">
       {/* Top Navbar / Header */}
       <header className="bg-black border-b border-neutral-900 px-8 py-5 shrink-0 flex items-center justify-between sticky top-0 z-10">
-        <div>
+        <div className="flex items-center gap-4">
+          <img src="/logo.png" alt="SwiftGate Logo" className="h-8 w-auto object-contain" />
           <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
             PMS Command Center
             <span className="flex items-center gap-2 bg-emerald-500/10 text-emerald-500 text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-sm border border-emerald-500/20">

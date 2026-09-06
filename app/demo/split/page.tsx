@@ -39,6 +39,7 @@ export default function SplitScreenDemo() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
           </Link>
+          <img src="/logo.png" alt="SwiftGate Logo" className="h-6 w-auto object-contain" />
           <div>
             <h1 className="text-sm font-semibold tracking-wide">Interactive Demo Mode</h1>
             <p className="text-[10px] uppercase tracking-widest text-neutral-500 mt-0.5">

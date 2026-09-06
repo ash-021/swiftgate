@@ -224,7 +224,7 @@ export default function LandingPage() {
 
           <Link
             href="/contactus"
-            className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-white border border-[0.5px] border-neutral-800 hover:border-neutral-600 px-4 py-2 transition-colors"
+            className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-black bg-brand-500 hover:bg-brand-400 font-semibold border border-brand-500 px-4 py-2 transition-colors"
           >
             Talk to Sales
             <ArrowRight className="w-3 h-3" />
