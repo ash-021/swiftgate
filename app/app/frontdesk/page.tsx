@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { sendInviteLink } from '@/actions/sendInviteLink';
 
 type CheckIn = {
   id: string;
@@ -27,6 +28,9 @@ export default function FrontDeskDashboard() {
   const [activeFilter, setActiveFilter] = useState<Filter>('ALL');
   const [roomAssignments, setRoomAssignments] = useState<Record<string, string>>({});
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  
+  const [invitePhone, setInvitePhone] = useState('');
+  const [isSendingInvite, setIsSendingInvite] = useState(false);
 
   useEffect(() => {
     // 1. Fetch initial load of today's check-ins
@@ -126,6 +130,25 @@ export default function FrontDeskDashboard() {
     }
   };
 
+  const handleSendInvite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!invitePhone) return;
+    setIsSendingInvite(true);
+    try {
+      const res = await sendInviteLink(invitePhone);
+      if (res.success) {
+        alert('Invite sent successfully!');
+        setInvitePhone('');
+      } else {
+        alert(`Error: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Failed to send invite: ${err.message}`);
+    } finally {
+      setIsSendingInvite(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white font-sans flex flex-col">
       {/* Top Navbar / Header */}
@@ -168,8 +191,8 @@ export default function FrontDeskDashboard() {
       <main className="flex-1 p-8 overflow-y-auto">
         
         {/* Controls: Search & Filter */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex gap-2 p-1 bg-neutral-900 rounded-sm border border-neutral-800">
+        <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 mb-8">
+          <div className="flex gap-2 p-1 bg-neutral-900 rounded-sm border border-neutral-800 shrink-0">
             {(['ALL', 'PENDING', 'CHECKED_IN'] as Filter[]).map(f => (
               <button
                 key={f}
@@ -183,17 +206,38 @@ export default function FrontDeskDashboard() {
             ))}
           </div>
 
-          <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search guests or IDs..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-72 bg-black border border-[0.5px] border-neutral-800 rounded-sm pl-10 pr-4 py-2 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition-colors"
-            />
+          <div className="flex flex-wrap items-center gap-4 w-full xl:w-auto">
+            {/* WhatsApp Invite Form */}
+            <form onSubmit={handleSendInvite} className="flex items-center gap-2">
+              <input
+                type="tel"
+                placeholder="+1234567890"
+                value={invitePhone}
+                onChange={(e) => setInvitePhone(e.target.value)}
+                className="w-40 bg-black border border-[0.5px] border-neutral-800 rounded-sm px-3 py-2 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={isSendingInvite || !invitePhone}
+                className="bg-emerald-500 hover:bg-emerald-400 disabled:bg-neutral-800 disabled:text-neutral-500 text-black text-sm font-medium px-4 py-2 rounded-sm transition-colors whitespace-nowrap"
+              >
+                {isSendingInvite ? 'Sending...' : 'Send WhatsApp Link'}
+              </button>
+            </form>
+
+            {/* Search Bar */}
+            <div className="relative flex-1 xl:flex-none">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search guests or IDs..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full xl:w-72 bg-black border border-[0.5px] border-neutral-800 rounded-sm pl-10 pr-4 py-2 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition-colors"
+              />
+            </div>
           </div>
         </div>
 
