@@ -78,7 +78,7 @@ export default function SplitScreenDemo() {
               {/* Notch */}
               <div className="absolute top-0 inset-x-0 h-6 bg-neutral-800 rounded-b-3xl w-40 mx-auto z-50"></div>
               <iframe 
-                src={`${appUrl}/checkin/demo-token`}
+                src="/app/checkin/demo-token"
                 className="w-full h-full border-none"
                 title="Guest Check-in"
               />
@@ -98,7 +98,7 @@ export default function SplitScreenDemo() {
             </div>
           </div>
           <iframe 
-            src={`${appUrl}/frontdesk`}
+            src="/app/frontdesk"
             className="w-full h-full border-none bg-neutral-950"
             title="Front Desk PMS"
           />
