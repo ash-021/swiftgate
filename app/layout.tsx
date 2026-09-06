@@ -6,14 +6,14 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "SwiftGate — Zero-Download Hospitality OS",
-  description: "SwiftGate is a zero-app hospitality platform that automates biometric guest check-in and regulatory compliance for modern hotels.",
+  description: "The Frictionless Guest Experience Layer. Automated contactless check-ins and in-room concierge, with zero app downloads or hardware required.",
   manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     title: "SwiftGate",
-    description: "SwiftGate is a zero-app hospitality platform that automates biometric guest check-in and regulatory compliance for modern hotels.",
+    description: "The Frictionless Guest Experience Layer. Automated contactless check-ins and in-room concierge, with zero app downloads or hardware required.",
     type: "website",
   },
 };
