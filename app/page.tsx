@@ -211,7 +211,7 @@ export default function LandingPage() {
             <img src="/logo.png" alt="SwiftGate Logo" className="h-6 w-auto object-contain" />
             <p className="font-bold text-lg text-white tracking-tight">SwiftGate</p>
             <div className="hidden md:flex items-center gap-2 ml-2">
-              {["WhatsApp-Native", "PMS Integrated", "Biometric Compliance"].map((b) => (
+              {["ZERO-FRICTION AND SAFE ONBOARDING", "PMS Integrated", "Biometric Compliance"].map((b) => (
                 <span
                   key={b}
                   className="text-[10px] uppercase tracking-widest border border-[0.5px] border-neutral-800 text-neutral-500 px-2.5 py-1"
@@ -245,9 +245,7 @@ export default function LandingPage() {
                 Frictionless Check-In &amp; In-Stay Commerce for Modern Hotels.
               </h1>
               <p className="text-neutral-400 text-sm lg:text-base leading-relaxed max-w-xl">
-                SwiftGate replaces manual reception bottlenecks with WhatsApp-native
-                biometric check-in, automated guest preferences, and PMS-linked in-room
-                ordering.
+                SwiftGate replaces manual reception bottlenecks with zero-app biometric verification, automated guest preferences, and PMS-linked in-room ordering.
               </p>
             </div>
 

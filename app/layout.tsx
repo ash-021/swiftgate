@@ -6,15 +6,14 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "SwiftGate — Zero-Download Hospitality OS",
-  description:
-    "B2B SaaS and Guest PWA platform for modern hotels.",
+  description: "SwiftGate is a zero-app hospitality platform that automates biometric guest check-in and regulatory compliance for modern hotels.",
   manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     title: "SwiftGate",
-    description: "The Zero-Download Operating System for Modern Hospitality.",
+    description: "SwiftGate is a zero-app hospitality platform that automates biometric guest check-in and regulatory compliance for modern hotels.",
     type: "website",
   },
 };
@@ -32,8 +31,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "SoftwareApplication"],
+    "name": "SwiftGate",
+    "applicationCategory": "BusinessApplication",
+    "description": "B2B hospitality software for automated guest check-in, biometric KYC, and Form C compliance.",
+    "url": "https://www.swiftgate.in"
+  };
+
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased bg-slate-950 text-slate-100`}>
         {children}
         <Analytics />
