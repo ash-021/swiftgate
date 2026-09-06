@@ -52,18 +52,19 @@ export default function PassportScanner() {
     const src = webcamRef.current?.getScreenshot();
     if (!src) return;
 
+    // Step 1: Freeze the camera by showing the captured photo
+    setPassportSrc(src);
     setIsLoading(true);
     setError(null);
     setPhase('Isolating MRZ zone...');
 
     try {
-      // 1. Load image to crop it to the bounding box
+      // Crop internally to the bounding box region for better OCR accuracy
       const img = new Image();
       img.src = src;
       await new Promise((resolve) => { img.onload = resolve; });
 
       const canvas = document.createElement('canvas');
-      // Bounding box is roughly 80% width and 50% height in the center
       const cropWidth = img.width * 0.8;
       const cropHeight = img.height * 0.5;
       const cropX = (img.width - cropWidth) / 2;
@@ -73,21 +74,20 @@ export default function PassportScanner() {
       canvas.height = cropHeight;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('Canvas not supported');
-
       ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-      
       const croppedSrc = canvas.toDataURL('image/jpeg');
-      // Show the cropped image to the user so they see what the AI sees!
-      setPassportSrc(croppedSrc);
 
+      // Step 2: Run OCR on the cropped image
       setPhase('Scanning MRZ text...');
       const result = await Tesseract.recognize(croppedSrc, 'eng');
       const parsed = parse(result.data.text);
-      
+
       if (!parsed.valid || !parsed.fields?.firstName || !parsed.fields?.documentNumber) {
-        throw new Error('Please align the bottom two lines of the passport within the frame');
+        throw new Error('MRZ_PARSE_FAILED');
       }
 
+      // Step 3: Delete photo, store only text
+      setPassportSrc(null);
       setExtractedData({
         name: `${parsed.fields.firstName || ''} ${parsed.fields.lastName || ''}`.trim(),
         passportNumber: parsed.fields.documentNumber || '',
@@ -98,10 +98,10 @@ export default function PassportScanner() {
       setStep('VISA_UPLOAD');
     } catch (err: any) {
       console.error('MRZ Parsing Error:', err);
-      // Always show a clean user-facing instruction, ignoring internal parser errors
-      setError('Please align the bottom two lines of the passport within the frame');
+      // On error: keep passportSrc set (camera stays frozen on the captured image)
+      // User will see the Retake button to try again
+      setError('Could not read MRZ code. Please align the bottom two lines of the passport within the frame.');
       setIsLoading(false);
-      setPassportSrc(null); // allow them to retake
     }
   }, []);
 
@@ -264,7 +264,20 @@ export default function PassportScanner() {
 
             <div className="w-full border border-[0.5px] border-neutral-800 rounded-sm overflow-hidden bg-black relative flex flex-col items-center justify-center min-h-[400px]">
               {passportSrc ? (
-                <img src={passportSrc} alt="Passport preview" className="w-full h-full object-cover opacity-80" />
+                <>
+                  <img src={passportSrc} alt="Passport preview" className="w-full h-full object-contain bg-neutral-900 opacity-80" />
+                  {!isLoading && (
+                    <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center p-6 text-center">
+                      <button
+                        type="button"
+                        onClick={() => { setPassportSrc(null); setError(null); }}
+                        className="bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md px-6 py-2 rounded-full text-sm font-medium transition-colors mb-4"
+                      >
+                        Retake Photo
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <>
                   <Webcam
