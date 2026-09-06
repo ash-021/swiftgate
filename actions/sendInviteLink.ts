@@ -23,7 +23,11 @@ export async function sendInviteLink(phoneNumber: string) {
     const from = fromNumber.startsWith('whatsapp:') ? fromNumber : `whatsapp:${fromNumber}`;
 
     const message = await client.messages.create({
-      body: 'Welcome to SwiftGate Hotel! Please complete your express check-in here: https://app.localhost:3000/checkin/demo-token',
+      contentSid: 'HXfe5ab5f00277942d4d4200328b4d403c',
+      contentVariables: JSON.stringify({
+        "1": "https://app.localhost:3000/checkin/demo-token",
+        "2": "SwiftGate Express"
+      }),
       from,
       to,
     });
