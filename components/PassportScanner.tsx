@@ -57,13 +57,22 @@ export default function PassportScanner() {
 
     try {
       // Dynamically import the Dynamsoft SDK (client-side only)
-      const { MRZScanner } = await import('dynamsoft-mrz-scanner');
+      const { MRZScanner, EnumMRZDocumentType } = await import('dynamsoft-mrz-scanner');
 
       setPhase('Loading scanner...');
 
       const scanner = new MRZScanner({
         license: process.env.NEXT_PUBLIC_DYNAMSOFT_LICENSE || '',
         container: scannerContainerRef.current || undefined,
+        mrzFormatType: [EnumMRZDocumentType.Passport],
+        engineResourcePaths: {
+          dcvBundle: 'https://cdn.jsdelivr.net/npm/dynamsoft-capture-vision-bundle@3.4.2001/dist/',
+          dcvData: 'https://cdn.jsdelivr.net/npm/dynamsoft-capture-vision-data@1.2.1/',
+        },
+        scannerViewConfig: {
+          enableMultiFrameCrossFilter: true,
+          showFormatSelector: false,
+        },
       });
 
       // Launch the built-in camera UI — this handles everything:
@@ -257,7 +266,7 @@ export default function PassportScanner() {
             {/* Dynamsoft scanner will mount its own UI here */}
             <div 
               ref={scannerContainerRef}
-              className="w-full border border-[0.5px] border-neutral-800 rounded-sm overflow-hidden bg-black relative min-h-[400px]"
+              className="w-full border border-[0.5px] border-neutral-800 rounded-sm overflow-hidden bg-black relative min-h-[70vh]"
               style={{ display: scannerActive ? 'block' : 'none' }}
             />
 
