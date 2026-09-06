@@ -36,6 +36,7 @@ export default function RootLayout({
     "@type": ["Organization", "SoftwareApplication"],
     "name": "SwiftGate",
     "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser, iOS, Android",
     "description": "B2B hospitality software for automated guest check-in, biometric KYC, and Form C compliance.",
     "url": "https://www.swiftgate.in"
   };
