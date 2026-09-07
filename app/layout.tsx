@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "SwiftGate — Zero-Download Hospitality OS",
+  title: "SwiftGate | Zero-Download Hospitality OS",
   description: "The Frictionless Guest Experience Layer. Automated contactless check-ins and in-room concierge, with zero app downloads or hardware required.",
   manifest: "/manifest.json",
   icons: {

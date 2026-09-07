@@ -34,10 +34,10 @@ export default function ContactUsPage() {
               GET IN TOUCH
             </p>
             <h1 className="text-3xl font-semibold text-white mt-2 mb-4">
-              Let&apos;s talk about enterprise deployment.
+              Let&apos;s talk about deployment.
             </h1>
             <p className="text-sm text-neutral-400 leading-relaxed max-w-md">
-              Whether you are a single boutique property or a large global portfolio, SwiftGate can be deployed securely alongside your existing PMS in a matter of hours.
+              SwiftGate deploys securely alongside your existing PMS in hours, whether you run a single boutique property or a global portfolio.
             </p>
           </div>
           <div>

@@ -184,7 +184,7 @@ export default function ConciergePage() {
               <div>
                 <Eyebrow>SwiftGate Concierge</Eyebrow>
                 <p className="text-xs font-semibold text-white mt-0.5 tracking-wide">
-                  ROOM {ROOM} &mdash; ACTIVE
+                  ROOM {ROOM} - ACTIVE
                 </p>
               </div>
             </div>

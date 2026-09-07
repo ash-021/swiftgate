@@ -277,12 +277,12 @@ export default function LandingPage() {
             <DemoCard
               eyebrow="Interactive Experience"
               title="Launch Ultimate Split-Screen Demo"
-              description="Experience the magic of zero-trust edge computing. Use the mobile guest flow and watch records sync to the PMS Front Desk instantly in real-time."
+              description="Run the mobile guest flow side-by-side with the PMS Front Desk to see records sync in real-time."
               href="/demo/split"
               qrUrl={`${origin}/demo/split`}
             />
             <DemoCard
-              eyebrow="Flow 2 of 2 — In-Room QR Scan"
+              eyebrow="Flow 2 of 2: In-Room QR Scan"
               title="Launch In-Room Concierge"
               description="Simulates the in-room ordering experience: F&B menu, cart, and direct room-folio charge via Kitchen Display System."
               href="/demo/concierge"
@@ -306,7 +306,7 @@ export default function LandingPage() {
                 Pre-Arrival Verification Flow
               </h2>
               <p className="text-xs text-neutral-400 leading-relaxed max-w-md">
-                Guests complete regulatory identity verification on their mobile device prior to arrival. Verified guest records and compliance parameters write directly to the hotel management system.
+                Guests verify their identity on their own devices before they arrive. The verified data and compliance details write directly to your hotel management system.
               </p>
             </div>
             <div className="flex justify-center lg:justify-end">
@@ -322,7 +322,7 @@ export default function LandingPage() {
               SYSTEM PIPELINE
             </p>
             <h2 className="text-2xl font-semibold text-white mt-2">
-              How SwiftGate Operates
+              How SwiftGate Works
             </h2>
             <p className="text-xs text-neutral-500 mt-3 max-w-2xl leading-relaxed">
               A secure verification pipeline completed by guests in under a minute on their own device.
@@ -387,11 +387,10 @@ export default function LandingPage() {
               Platform Architecture
             </p>
             <h2 className="text-2xl font-semibold text-white mt-2">
-              Enterprise-Grade Platform Architecture
+              Platform Architecture
             </h2>
             <p className="text-xs text-neutral-500 mt-3 max-w-2xl leading-relaxed">
-              A robust, zero-friction operating layer designed to securely bridge the gap
-              between the modern guest experience and your core infrastructure.
+              A secure operating layer that connects the guest experience directly to your core infrastructure.
             </p>
           </div>
 
@@ -424,9 +423,7 @@ export default function LandingPage() {
                 </h2>
               </div>
               <p className="text-xs text-neutral-500 leading-relaxed">
-                SwiftGate operates as a middleware orchestration layer, listening for
-                reservation events and synchronizing check-ins, identity folios, and
-                service charges directly into the hotel&apos;s existing PMS software.
+                SwiftGate listens for reservation events and synchronizes check-ins, folios, and service charges directly into the hotel&apos;s existing PMS software.
               </p>
               <div className="space-y-3">
                 {[

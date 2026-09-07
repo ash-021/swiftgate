@@ -420,7 +420,7 @@ function StepPreferences({ onNext }: { onNext: () => void }) {
                             <Clock className="w-3 h-3" />
                             Requesting arrival at{" "}
                             <span className="text-white font-semibold">{earlyCheckinTime}</span>
-                            {" "}— subject to housekeeping availability.
+                            {" "} (subject to housekeeping availability)
                           </p>
                         )}
                       </div>
@@ -556,7 +556,7 @@ export default function CheckInPage() {
         {/* Footer */}
         <footer className="px-6 py-4 border-t border-[0.5px] border-neutral-800 shrink-0">
           <p className="text-[10px] uppercase tracking-widest text-neutral-700 text-center">
-            SwiftGate Technologies &mdash; Secure Guest Platform
+            SwiftGate Technologies - Secure Guest Platform
           </p>
         </footer>
       </div>

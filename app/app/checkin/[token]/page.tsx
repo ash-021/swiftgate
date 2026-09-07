@@ -104,7 +104,7 @@ export default function CheckinPage() {
         {/* Footer */}
         <footer className="px-6 py-4 border-t border-[0.5px] border-neutral-800 shrink-0">
           <p className="text-[10px] uppercase tracking-widest text-neutral-700 text-center">
-            SwiftGate Technologies &mdash; Secure Guest Platform
+            SwiftGate Technologies - Secure Guest Platform
           </p>
         </footer>
       </div>
