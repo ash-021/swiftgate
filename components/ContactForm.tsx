@@ -3,19 +3,25 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { sendContactEmail } from "../actions/sendContactEmail";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate network request
-    setTimeout(() => {
-      setLoading(false);
+    
+    const formData = new FormData(e.currentTarget);
+    const result = await sendContactEmail(formData);
+    
+    setLoading(false);
+    if (result.success) {
       setSubmitted(true);
-    }, 1200);
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -67,24 +73,24 @@ export default function ContactForm() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Full Name</label>
-                <input required type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="John Doe" />
+                <input required name="fullName" type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="John Doe" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Work Email</label>
-                <input required type="email" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="john@hotel.com" />
+                <input required name="email" type="email" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="john@hotel.com" />
               </div>
             </div>
 
             <div className="space-y-1.5">
               <label className="text-[10px] uppercase tracking-widest text-neutral-500">Property / Group Name</label>
-              <input required type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="Grand Central Tech Hotel" />
+              <input required name="propertyName" type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="Grand Central Tech Hotel" />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Portfolio Size</label>
-                <select required className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer">
-                  <option value="" disabled selected>Select Rooms</option>
+                <select required name="portfolioSize" defaultValue="" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer">
+                  <option value="" disabled>Select Rooms</option>
                   <option value="1-50">1 - 50 Rooms</option>
                   <option value="51-200">51 - 200 Rooms</option>
                   <option value="201-500">201 - 500 Rooms</option>
@@ -93,8 +99,8 @@ export default function ContactForm() {
               </div>
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Primary Interest</label>
-                <select required className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer">
-                  <option value="" disabled selected>Select Area</option>
+                <select required name="primaryInterest" defaultValue="" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer">
+                  <option value="" disabled>Select Area</option>
                   <option value="checkin">Pre-Arrival Check-In</option>
                   <option value="concierge">In-Room Concierge</option>
                   <option value="both">Full Platform</option>
