@@ -49,7 +49,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} font-sans antialiased bg-slate-950 text-slate-100`}>
+      <body className={`${inter.variable} font-sans antialiased bg-neutral-950 text-slate-100`}>
         {children}
         <Analytics />
       </body>

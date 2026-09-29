@@ -10,6 +10,7 @@ export async function sendContactEmail(formData: FormData) {
   const propertyName = formData.get("propertyName") as string;
   const portfolioSize = formData.get("portfolioSize") as string;
   const primaryInterest = formData.get("primaryInterest") as string;
+  const enquiry = formData.get("enquiry") as string;
 
   try {
     const data = await resend.emails.send({
@@ -23,6 +24,7 @@ export async function sendContactEmail(formData: FormData) {
         <p><strong>Property/Group Name:</strong> ${propertyName}</p>
         <p><strong>Portfolio Size:</strong> ${portfolioSize}</p>
         <p><strong>Primary Interest:</strong> ${primaryInterest}</p>
+        ${enquiry ? `<p><strong>Enquiry:</strong> ${enquiry}</p>` : ''}
       `,
     });
 

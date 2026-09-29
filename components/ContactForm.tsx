@@ -30,7 +30,7 @@ export default function ContactForm() {
         <p className="text-[10px] uppercase tracking-widest text-emerald-500 font-mono">
           Priority Onboarding
         </p>
-        <h3 className="text-xl font-semibold text-white mt-1">Talk to Sales</h3>
+        <h3 className="text-xl font-semibold text-white mt-1">Get in touch</h3>
         <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
           Ready to eliminate check-in queues and capture incremental revenue? Leave your details and we&apos;ll be in touch.
         </p>
@@ -70,7 +70,7 @@ export default function ContactForm() {
             onSubmit={handleSubmit}
             className="space-y-4"
           >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Full Name</label>
                 <input required name="fullName" type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="John Doe" />
@@ -86,7 +86,7 @@ export default function ContactForm() {
               <input required name="propertyName" type="text" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors" placeholder="Grand Central Tech Hotel" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500">Portfolio Size</label>
                 <select required name="portfolioSize" defaultValue="" className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white outline-none focus:border-neutral-500 transition-colors appearance-none cursor-pointer">
@@ -108,14 +108,25 @@ export default function ContactForm() {
               </div>
             </div>
 
+            <div className="space-y-1.5 mt-4">
+              <label className="text-[10px] uppercase tracking-widest text-neutral-500">Enquiry (Optional)</label>
+              <textarea name="enquiry" rows={3} className="w-full bg-black border-[0.5px] border-neutral-800 p-2.5 text-xs text-white placeholder-neutral-700 outline-none focus:border-neutral-500 transition-colors resize-none" placeholder="How can we help you?"></textarea>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
               className="w-full mt-2 bg-white hover:bg-neutral-200 text-black font-semibold text-xs py-3 flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Transmitting..." : "Talk to Sales"}
+              {loading ? "Transmitting..." : "Get in touch"}
               {!loading && <ArrowRight className="w-3.5 h-3.5" />}
             </button>
+            
+            <div className="text-center pt-2">
+              <p className="text-[10px] text-neutral-500">
+                Or reach out directly at <a href="mailto:ashish@swiftgate.in" className="text-neutral-400 hover:text-white transition-colors underline underline-offset-2">ashish@swiftgate.in</a>
+              </p>
+            </div>
           </motion.form>
         )}
       </AnimatePresence>
